@@ -737,6 +737,19 @@
 
                 assert.equals(status, 204);
                 assert.equals(statusText, "No Content");
+            },
+
+            "can be called with body only": function() {
+                this.xhr.respond("Hello");
+
+                assert.equals(this.xhr.responseText, "Hello");
+            },
+
+            "uses defaults when headers are not specified": function() {
+                this.xhr.defaultHeaders = {"Content-Type": "application/json"};
+                this.xhr.respond();
+
+                assert.equals(this.xhr.getAllResponseHeaders(), "Content-Type: application/json\r\n");
             }
         },
 
