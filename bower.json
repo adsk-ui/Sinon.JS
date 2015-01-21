@@ -1,0 +1,21 @@
+{
+  "name": "Sinon",
+  "version": "adsk_v1.12.3",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "main": ["sinon.js"],
+  "devDependencies": {
+
+  },
+  "dependencies": {
+
+  },
+  "resolutions": {
+
+  },
+  "overrides": {
+
+  }
+}
