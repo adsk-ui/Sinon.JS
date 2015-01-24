@@ -1,5 +1,5 @@
 /**
- * Sinon.JS adsk_1.12.3, 2015/01/20
+ * Sinon.JS adsk_1.12.4, 2015/01/24
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -1206,7 +1206,7 @@ if (typeof sinon == "undefined") {
                 }
                 this.status = typeof status == "number" ? status : 200;
                 this.statusText = FakeXMLHttpRequest.statusCodes[this.status];
-                this.setResponseHeaders(headers || this.defaultHeaders);
+                this.setResponseHeaders(headers || FakeXMLHttpRequest.defaultHeaders);
                 this.setResponseBody(body || "");
             },
 
