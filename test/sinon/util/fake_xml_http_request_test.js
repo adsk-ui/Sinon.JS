@@ -746,7 +746,7 @@
             },
 
             "uses defaults when headers are not specified": function() {
-                this.xhr.defaultHeaders = {"Content-Type": "application/json"};
+                sinon.FakeXMLHttpRequest.defaultHeaders = {"Content-Type": "application/json"};
                 this.xhr.respond();
 
                 assert.equals(this.xhr.getAllResponseHeaders(), "Content-Type: application/json\r\n");
