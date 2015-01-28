@@ -1,5 +1,5 @@
 /**
- * Sinon.JS adsk_1.12.4, 2015/01/24
+ * Sinon.JS adsk_1.12.4, 2015/01/28
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -687,17 +687,20 @@ if (typeof sinon == "undefined") {
  * Copyright (c) 2010-2013 Christian Johansen
  */
 
-(function (global) {
+(function(global) {
 
     var supportsProgress = typeof ProgressEvent !== "undefined";
     var supportsCustomEvent = typeof CustomEvent !== "undefined";
-    var sinonXhr = { XMLHttpRequest: global.XMLHttpRequest };
+    var sinonXhr = {
+        XMLHttpRequest: global.XMLHttpRequest
+    };
     sinonXhr.GlobalXMLHttpRequest = global.XMLHttpRequest;
     sinonXhr.GlobalActiveXObject = global.ActiveXObject;
     sinonXhr.supportsActiveX = typeof sinonXhr.GlobalActiveXObject != "undefined";
     sinonXhr.supportsXHR = typeof sinonXhr.GlobalXMLHttpRequest != "undefined";
-    sinonXhr.workingXHR = sinonXhr.supportsXHR ? sinonXhr.GlobalXMLHttpRequest : sinonXhr.supportsActiveX
-                                     ? function () { return new sinonXhr.GlobalActiveXObject("MSXML2.XMLHTTP.3.0") } : false;
+    sinonXhr.workingXHR = sinonXhr.supportsXHR ? sinonXhr.GlobalXMLHttpRequest : sinonXhr.supportsActiveX ? function() {
+        return new sinonXhr.GlobalActiveXObject("MSXML2.XMLHTTP.3.0")
+    } : false;
     sinonXhr.supportsCORS = sinonXhr.supportsXHR && "withCredentials" in (new sinonXhr.GlobalXMLHttpRequest());
 
     /*jsl:ignore*/
@@ -738,7 +741,7 @@ if (typeof sinon == "undefined") {
         var events = ["loadstart", "load", "abort", "loadend"];
 
         function addEventListener(eventName) {
-            xhr.addEventListener(eventName, function (event) {
+            xhr.addEventListener(eventName, function(event) {
                 var listener = xhr["on" + eventName];
 
                 if (listener && typeof listener == "function") {
@@ -786,7 +789,8 @@ if (typeof sinon == "undefined") {
     UploadProgress.prototype.dispatchEvent = function dispatchEvent(event) {
         var listeners = this.eventListeners[event.type] || [];
 
-        for (var i = 0, listener; (listener = listeners[i]) != null; i++) {
+        for (var i = 0, listener;
+            (listener = listeners[i]) != null; i++) {
             listener(event);
         }
     };
@@ -824,23 +828,30 @@ if (typeof sinon == "undefined") {
             callback(collection[i]);
         }
     }
+
     function some(collection, callback) {
-        for (var index = 0; index < collection.length; index++) {
-            if (callback(collection[index]) === true) {
-                return true;
+            for (var index = 0; index < collection.length; index++) {
+                if (callback(collection[index]) === true) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
-    // largest arity in XHR is 5 - XHR#open
-    var apply = function (obj, method, args) {
+        // largest arity in XHR is 5 - XHR#open
+    var apply = function(obj, method, args) {
         switch (args.length) {
-        case 0: return obj[method]();
-        case 1: return obj[method](args[0]);
-        case 2: return obj[method](args[0], args[1]);
-        case 3: return obj[method](args[0], args[1], args[2]);
-        case 4: return obj[method](args[0], args[1], args[2], args[3]);
-        case 5: return obj[method](args[0], args[1], args[2], args[3], args[4]);
+            case 0:
+                return obj[method]();
+            case 1:
+                return obj[method](args[0]);
+            case 2:
+                return obj[method](args[0], args[1]);
+            case 3:
+                return obj[method](args[0], args[1], args[2]);
+            case 4:
+                return obj[method](args[0], args[1], args[2], args[3]);
+            case 5:
+                return obj[method](args[0], args[1], args[2], args[3], args[4]);
         }
     };
 
@@ -861,14 +872,14 @@ if (typeof sinon == "undefined") {
             "addEventListener",
             "overrideMimeType",
             "removeEventListener"
-        ], function (method) {
-            fakeXhr[method] = function () {
+        ], function(method) {
+            fakeXhr[method] = function() {
                 return apply(xhr, method, arguments);
             };
         });
 
-        var copyAttrs = function (args) {
-            each(args, function (attr) {
+        var copyAttrs = function(args) {
+            each(args, function(attr) {
                 try {
                     fakeXhr[attr] = xhr[attr]
                 } catch (e) {
@@ -891,14 +902,16 @@ if (typeof sinon == "undefined") {
                 copyAttrs(["responseXML"]);
             }
             if (fakeXhr.onreadystatechange) {
-                fakeXhr.onreadystatechange.call(fakeXhr, { target: fakeXhr });
+                fakeXhr.onreadystatechange.call(fakeXhr, {
+                    target: fakeXhr
+                });
             }
         };
 
         if (xhr.addEventListener) {
             for (var event in fakeXhr.eventListeners) {
                 if (fakeXhr.eventListeners.hasOwnProperty(event)) {
-                    each(fakeXhr.eventListeners[event], function (handler) {
+                    each(fakeXhr.eventListeners[event], function(handler) {
                         xhr.addEventListener(event, handler);
                     });
                 }
@@ -932,7 +945,7 @@ if (typeof sinon == "undefined") {
     function verifyResponseBodyType(body) {
         if (typeof body != "string") {
             var error = new Error("Attempted to respond to fake XMLHttpRequest with " +
-                                 body + ", which is not a string.");
+                body + ", which is not a string.");
             error.name = "InvalidBodyException";
             throw error;
         }
@@ -1019,7 +1032,7 @@ if (typeof sinon == "undefined") {
 
                 if (FakeXMLHttpRequest.useFilters === true) {
                     var xhrArgs = arguments;
-                    var defake = some(FakeXMLHttpRequest.filters, function (filter) {
+                    var defake = some(FakeXMLHttpRequest.filters, function(filter) {
                         return filter.apply(this, xhrArgs)
                     });
                     if (defake) {
@@ -1048,7 +1061,10 @@ if (typeof sinon == "undefined") {
                         this.dispatchEvent(new sinon.Event("loadend", false, false, this));
                         this.upload.dispatchEvent(new sinon.Event("load", false, false, this));
                         if (supportsProgress) {
-                            this.upload.dispatchEvent(new sinon.ProgressEvent("progress", {loaded: 100, total: 100}));
+                            this.upload.dispatchEvent(new sinon.ProgressEvent("progress", {
+                                loaded: 100,
+                                total: 100
+                            }));
                         }
                         break;
                 }
@@ -1218,8 +1234,26 @@ if (typeof sinon == "undefined") {
 
             uploadError: function uploadError(error) {
                 if (supportsCustomEvent) {
-                    this.upload.dispatchEvent(new sinon.CustomEvent("error", {detail: error}));
+                    this.upload.dispatchEvent(new sinon.CustomEvent("error", {
+                        detail: error
+                    }));
                 }
+            },
+
+            getUrlParam: function(name) {
+                var url = this.url,
+                    params,
+                    paramsLength;
+                params = url ? url.substring(url.indexOf('?') + 1) : '';
+                params = params.split('&');
+                paramsLength = params.length;
+                for (var i = 0, pair; i < paramsLength; i++) {
+                    pair = params[i].split('=');
+                    if (pair[0] === name) {
+                        return pair[1];
+                    }
+                }
+                return '';
             }
         });
 
@@ -1231,7 +1265,7 @@ if (typeof sinon == "undefined") {
             DONE: 4
         });
 
-        sinon.useFakeXMLHttpRequest = function () {
+        sinon.useFakeXMLHttpRequest = function() {
             FakeXMLHttpRequest.restore = function restore(keepOnCreate) {
                 if (sinonXhr.supportsXHR) {
                     global.XMLHttpRequest = sinonXhr.GlobalXMLHttpRequest;
@@ -1289,7 +1323,6 @@ if (typeof sinon == "undefined") {
     }
 
 })(typeof self !== "undefined" ? self : this);
-
 /**
  * @depend ../sinon.js
  */
