@@ -1043,6 +1043,27 @@
             }
         },
 
+        ".getUrlParam": {
+            setUp: function () {
+                this.xhr = new sinon.FakeXMLHttpRequest();
+            },
+
+            "is method": function () {
+                assert.isFunction(this.xhr.getUrlParam);
+            },
+
+            "returns empty string if param doesn't exist": function(){
+                assert.equals(this.xhr.getUrlParam('food'), '');
+            },
+
+            "returns string value if param exists": function(){
+                this.xhr.url = '/yum?food=pie&drink=milk';
+                assert.equals(this.xhr.getUrlParam('food'), 'pie');
+                assert.equals(this.xhr.getUrlParam('drink'), 'milk');
+            }
+
+        },
+
         "stub XHR": {
             setUp: fakeXhrSetUp,
             tearDown: fakeXhrTearDown,
