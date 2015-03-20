@@ -1,5 +1,5 @@
 /**
- * Sinon.JS adsk_1.12.4, 2015/01/28
+ * Sinon.JS adsk_1.12.5, 2015/03/20
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS

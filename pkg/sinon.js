@@ -1,5 +1,5 @@
 /**
- * Sinon.JS adsk_1.12.4, 2015/01/28
+ * Sinon.JS adsk_1.12.5, 2015/03/20
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -4575,20 +4575,21 @@ if (typeof sinon == "undefined") {
                 }
             },
 
-            getUrlParam: function(name) {
-                var url = this.url,
-                    params,
-                    paramsLength;
-                params = url ? url.substring(url.indexOf('?') + 1) : '';
-                params = params.split('&');
-                paramsLength = params.length;
-                for (var i = 0, pair; i < paramsLength; i++) {
-                    pair = params[i].split('=');
-                    if (pair[0] === name) {
-                        return pair[1];
-                    }
+            getUrlParam: function(key) {
+                var params,
+                    value = '';
+
+                if(this.url){
+                    // pull params from url string and remove ?
+                    params = this.url.match(/\?([^#]*)/);
+                    params = params && params.length === 2 && params[1];
+                    // isolate key/value pair
+                    params = params && params.match(new RegExp(key + '=([^&]+)'));
+                    // isolate value
+                    value = params && params.length === 2 ? params[1] : '';
                 }
-                return '';
+
+                return value;
             }
         });
 

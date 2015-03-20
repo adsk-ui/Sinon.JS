@@ -1052,7 +1052,12 @@
                 assert.isFunction(this.xhr.getUrlParam);
             },
 
-            "returns empty string if param doesn't exist": function(){
+            "returns empty string if url value doesn't exist": function(){
+                assert.equals(this.xhr.getUrlParam('food'), '');
+            },
+
+            "returns emtpy string if param doesn't exist": function(){
+                this.xhr.url = '/yum/food';
                 assert.equals(this.xhr.getUrlParam('food'), '');
             },
 
@@ -1061,6 +1066,8 @@
                 assert.equals(this.xhr.getUrlParam('food'), 'pie');
                 assert.equals(this.xhr.getUrlParam('drink'), 'milk');
             }
+
+
 
         },
 
