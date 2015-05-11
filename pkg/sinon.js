@@ -1,5 +1,5 @@
 /**
- * Sinon.JS adsk_1.12.5, 2015/03/20
+ * Sinon.JS 1.12.6, 2015/05/11
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -4741,6 +4741,7 @@ if (typeof sinon == "undefined") {
             create: function () {
                 var server = create(this);
                 this.xhr = sinon.useFakeXMLHttpRequest();
+                this.xhr.useFilters = false;
                 server.requests = [];
 
                 this.xhr.onCreate = function (xhrObj) {
