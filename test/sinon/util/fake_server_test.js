@@ -37,6 +37,22 @@ buster.testCase("sinon.fakeServer", {
         assert(restore.called);
     }),
 
+    ".create": {
+        setUp: function () {
+            this.server = sinon.fakeServer.create();
+        },
+
+        tearDown: function () {
+            this.server.restore();
+        },
+
+        "defaults useFilters to false": function () {
+            this.server = sinon.fakeServer.create();
+            this.server.xhr.useFilters = true;
+            this.server = sinon.fakeServer.create();
+            assert.equals(this.server.xhr.useFilters, false);
+        }
+    },
     ".requests": {
         setUp: function () {
             this.server = sinon.fakeServer.create();
