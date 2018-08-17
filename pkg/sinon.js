@@ -1,5 +1,5 @@
 /**
- * Sinon.JS 1.12.6, 2015/05/11
+ * Sinon.JS 1.13.0, 2018/08/17
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -4209,6 +4209,9 @@ if (typeof sinon == "undefined") {
             "removeEventListener"
         ], function(method) {
             fakeXhr[method] = function() {
+                if (method === 'send') {
+                    xhr.withCredentials = fakeXhr.withCredentials;
+                }
                 return apply(xhr, method, arguments);
             };
         });
@@ -4659,6 +4662,7 @@ if (typeof sinon == "undefined") {
     }
 
 })(typeof self !== "undefined" ? self : this);
+
 /**
  * @depend fake_xml_http_request.js
  * @depend ../format.js
